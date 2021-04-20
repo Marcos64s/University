@@ -1,0 +1,108 @@
+                     Smokers - Description of the internal state
+
+ AG  W00 W01 W02  S00 S01 S02  I00 I01 I02  C00 C01 C02 
+  1    0   0   0    0   0   0    0   0   0    0   0   0 
+  .    .   .   .    .   .   .    0   0   0    0   0   0 
+  .    .   .   .    .   .   .    0   0   0    0   0   0 
+  .    .   .   .    .   .   .    0   0   0    0   0   0 
+Semaphore Down ->  1
+  .    .   .   .    .   .   .    0   0   0    0   0   0 
+Semaphore Up ->  3
+Semaphore Up ->  5
+Semaphore Up ->  1
+Semaphore Down ->  1
+  2    .   .   .    .   .   .    1   0   1    0   0   0 
+  .    1   .   .    .   .   .    1   0   1    0   0   0 
+  .    0   .   .    .   .   .    1   0   1    0   0   0 
+  .    .   .   .    .   .   .    1   0   1    0   0   0 
+  .    .   .   .    .   .   .    1   0   1    0   0   0 
+  .    .   .   .    .   .   .    1   0   1    0   0   0 
+  .    .   .   1    .   .   .    1   0   1    0   0   0 
+  .    .   .   2    .   .   .    1   0   1    0   0   0 
+  .    .   .   0    .   .   .    1   0   1    0   0   0 
+  .    .   .   .    .   1   .    0   0   0    0   0   0 
+  .    .   .   .    .   2   .    0   0   0    0   1   0 
+  .    .   .   .    .   0   .    0   0   0    0   1   0 
+Semaphore Up ->  1
+Semaphore Down ->  2
+Semaphore Down ->  1
+  1    .   .   .    .   .   .    0   0   0    0   1   0 
+Semaphore Up ->  4
+Semaphore Up ->  5
+Semaphore Up ->  1
+Semaphore Down ->  1
+  2    .   .   .    .   .   .    0   1   1    0   1   0 
+  .    .   1   .    .   .   .    0   1   1    0   1   0 
+  .    .   0   .    .   .   .    0   1   1    0   1   0 
+  .    .   .   1    .   .   .    0   1   1    0   1   0 
+  .    .   .   2    .   .   .    0   1   1    0   1   0 
+  .    .   .   0    .   .   .    0   1   1    0   1   0 
+  .    .   .   .    1   .   .    0   0   0    0   1   0 
+  .    .   .   .    2   .   .    0   0   0    1   1   0 
+  .    .   .   .    0   .   .    0   0   0    1   1   0 
+Semaphore Up ->  1
+Semaphore Down ->  2
+Semaphore Down ->  1
+  1    .   .   .    .   .   .    0   0   0    1   1   0 
+Semaphore Up ->  3
+Semaphore Up ->  5
+Semaphore Up ->  1
+Semaphore Down ->  1
+  2    .   .   .    .   .   .    1   0   1    1   1   0 
+  .    .   .   1    .   .   .    1   0   1    1   1   0 
+  .    .   .   0    .   .   .    1   0   1    1   1   0 
+  .    1   .   .    .   .   .    1   0   1    1   1   0 
+  .    2   .   .    .   .   .    1   0   1    1   1   0 
+  .    0   .   .    .   .   .    1   0   1    1   1   0 
+  .    .   .   .    .   1   .    0   0   0    1   1   0 
+  .    .   .   .    .   2   .    0   0   0    1   2   0 
+Semaphore Up ->  1
+Semaphore Down ->  2
+Semaphore Down ->  1
+  1    .   .   .    .   .   .    0   0   0    1   2   0 
+Semaphore Up ->  3
+Semaphore Up ->  5
+Semaphore Up ->  1
+Semaphore Down ->  1
+  2    .   .   .    .   .   .    1   0   1    1   2   0 
+  .    .   .   .    .   0   .    1   0   1    1   2   0 
+  .    1   .   .    .   .   .    1   0   1    1   2   0 
+  .    .   .   1    .   .   .    1   0   1    1   2   0 
+  .    0   .   .    .   .   .    1   0   1    1   2   0 
+  .    .   .   2    .   .   .    1   0   1    1   2   0 
+  .    .   .   0    .   .   .    1   0   1    1   2   0 
+  .    .   .   .    .   1   .    0   0   0    1   2   0 
+  .    .   .   .    .   2   .    0   0   0    1   3   0 
+  .    .   .   .    .   0   .    0   0   0    1   3   0 
+Semaphore Up ->  1
+Semaphore Down ->  2
+Semaphore Down ->  1
+  1    .   .   .    .   .   .    0   0   0    1   3   0 
+Semaphore Up ->  3
+Semaphore Up ->  4
+Semaphore Up ->  1
+Semaphore Down ->  1
+  2    .   .   .    .   .   .    1   1   0    1   3   0 
+  .    .   1   .    .   .   .    1   1   0    1   3   0 
+  .    .   0   .    .   .   .    1   1   0    1   3   0 
+  .    1   .   .    .   .   .    1   1   0    1   3   0 
+  .    2   .   .    .   .   .    1   1   0    1   3   0 
+  .    0   .   .    .   .   .    1   1   0    1   3   0 
+  .    .   .   .    .   .   1    0   0   0    1   3   0 
+  .    .   .   .    .   .   2    0   0   0    1   3   1 
+Semaphore Up ->  1
+Semaphore Down ->  2
+Semaphore Down ->  1
+  3    .   .   .    .   .   .    0   0   0    1   3   1 
+Semaphore Up ->  3
+Semaphore Up ->  5
+Semaphore Up ->  4
+Semaphore Up ->  1
+  .    .   .   .    .   .   0    0   0   0    1   3   1 
+  .    3   .   .    .   .   .    0   0   0    1   3   1 
+  .    .   3   .    .   .   .    0   0   0    1   3   1 
+  .    .   .   .    3   .   .    0   0   0    1   3   1 
+  .    .   .   .    .   3   .    0   0   0    1   3   1 
+  .    .   .   3    .   .   .    0   0   0    1   3   1 
+  .    .   .   .    .   .   3    0   0   0    1   3   1 
+Semaphore Up ->  1

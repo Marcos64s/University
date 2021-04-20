@@ -1,0 +1,37 @@
+char *arr1[25]; - arr1 é um array de 25 ponteiros para char
+
+
+char (*arr2)[25] - arr2 é um ponteiro para um array de 25 chars
+
+int *pi1;
+
+pi1 = &i -> pi1(int *), i(int); &i(int *)
+
+i = *pi; i(int), pi1(int *), *pi1(int) -> não fazer i = *pi antes de inicializar o ponteiro
+
+pi1 = n; -> nome de array sozinho funciona como ponteiro para o 1º elemento
+
+pi1[4] = 25; -> pi1[4](int *)    *(pi1+4) -> pi1+4(int *), *(pi1+4)(int)
+
+a
+**argv -> array de argumentos, ponteiro para ponteiro para char
+
+argv[0] = 'cp';
+argv[0][1] = 'p';
+
+stderr - texto normal
+stdout -
+
+
+
+double atof(char *ptr)
+double strtod(char *ptr, char **endptr)
+                *ptr - string a converter   ; **endpt - ponteiro para ponteiro para char (no final aponta para o 1º char não convertido) 
+
+double x;
+char *pc;
+x = strtod("4.5", &pc/*pc(char *), &pc(char **)*/); -> x == 4.5 pc com endereço de '\0'
+
+int i;
+scanf("%d", &i);
+printf("%d",i);

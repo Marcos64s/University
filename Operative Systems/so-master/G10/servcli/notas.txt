@@ -1,0 +1,61 @@
+comm.h
+
+vamos ter um servidor
+
+que pode fazer diversas operacoes
+
+
+Cliente
+pode fazer outras operacoes 
+
+O servidor vai começar a funcionar primeiro e cria a memoria partilhada e os semaforos
+Depois, fica à espera de uma mensagem, bloqueado num semaforo
+
+depois começa o Cliente faz um cliOpenComm
+de seguida, faz um send ao servidor
+
+de seguida, o servidor acorda, recebe a mensagem, passa tudo para maiusculas e envia a resposta
+
+entretanto, o cliente ja esta a espera da resposta
+
+
+IMPLEMENTAÇÃO
+
+quando criarmos o array de semaforos, vamos criar 3 semaforos 
+quando criarmos a memoria partilhada, vamos criar uma memoria partilhada com tamanho apenas para uma mensagem
+
+algures no meio, em memoria partilhada, há um buffer onde cabe a mensagem (1 mensagem apenas)
+O mesmo buffer vai servir de pedido e resposta, tanto do cliente como servidor respetivamente
+O buffer e partilhado por ambos os processos
+
+R S A 
+1 0 0 -> Valores iniciais
+
+
+O servidor faz o OPEN, e R = 1;
+O servidor vai fazer um servReceive (down S que esta a 0, vai ficar a espera (porque bloqueia))
+
+O cliente faz o OPEN e de seguida faz um SEND -> faz down(r) e bloqueia 
+De seguida, copia a mensagem a enviar no buffer (memoria partilhada) e de sequida faz up() no S 
+O servidor vai acordar
+
+De seguida, o CLiente vai fazer um receive - down(A) - vai bloquear 
+
+
+
+servidor no receive faz down(S)
+R S A 
+0 0 0
+
+servidor vai buscar a mensagem, faz um UPPERCASE e envia a mensagem para o buffer, escreve por cima a resposta e de seguida faz um up(A) 
+R S A 
+0 0 1
+
+mAS O CLIENTE FAZ O DOWN(A)
+R S A 
+0 0 0 
+O cliente recebe a resposta e faz um up(R)
+
+R - Semáforo de Request
+S - Semáforo de Server esperar que o cliente envia qualquer coisa  
+A - Semáforo de Answer cliente espera que o servidor envie a resposta 

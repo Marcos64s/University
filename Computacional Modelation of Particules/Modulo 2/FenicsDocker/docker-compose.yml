@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+
+  mcc2019:
+    image: sbroh/mcc2019
+    container_name: mcc2019
+    hostname: sbro_admin
+    volumes:
+      - .:/home/ubuntu/shared
+    ports:
+      - "8888:8888"
+

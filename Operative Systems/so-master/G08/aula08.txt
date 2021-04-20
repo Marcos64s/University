@@ -1,0 +1,53 @@
+AULA 8
+-PROCESSOS (fork, exac, wait)
+-SINAIS()a
+
+Quando um processo faz fork(), cria uma cópia dele e passam a existir dois processos
+
+            | Pai
+            | PID 1010
+            | fork()
+Pai         | FILHO PID 1015
+PID 1010    |
+
+pid_t fork(void)
+{
+    return -1 se houver erro
+    return 0 se novo processo
+    return (PID do filho) > 0 se processo pai
+}
+
+pid_t getpid(void)
+pid_t getppid(void)
+
+
+Exercício 3
+
+Ao fim de executar o exec() no filho, o PID vai-se manter.
+O exec() não cria um novo processo: executa do ínicio um novo programa dentro de um processo que já existia
+Quando o ls terminar, o processo 1015 também termina.
+O exec() não tem valor de retorno.
+
+int execl(char *path, char *arg0,..);
+                |- *path -> caminho para o executável
+                |- *arg0 -> define argv[0], argv[1] (lista terminada com NULL)
+
+
+Exercício 4
+
+pid_t wait (int *status) 
+wait -> Espera por 1 processo filho
+pid_t -> pid do processo terminado
+status -> info sobre terminação (exit status)
+
+pid_t waitpid(pid_t pid, int *status, int options)
+> 0 - espera pelo processo pid
+-1 espera por 1 filho
+
+
+Exercício 5
+CTRL-C -> SIGINT    termina
+CTRL-Z -> SIGSTOP   stopped
+
+fg -> foreground
+bg -> background

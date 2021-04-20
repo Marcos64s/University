@@ -1,0 +1,135 @@
+                     Smokers - Description of the internal state
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  4
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Up ->  6
+Semaphore Down ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  5
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Up ->  6
+Semaphore Down ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  3
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Up ->  7
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  5
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Up ->  7
+Semaphore Down ->  1
+  .    .   .   .    1   .   .    1  -1   0    1   0   0 
+  .    .   .   .    2   .   .    1  -1   0    2   0   0 
+  1    .   .   .    .   .   .    1  -1   0    2   0   0 
+Semaphore Up ->  1
+Semaphore Down ->  3
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  4
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+  .    .   .   .    .   1   .    1   0  -1    2   0   0 
+  .    .   .   .    .   2   .    1   0  -1    2   1   0 
+  1    .   .   .    .   .   .    1   0  -1    2   1   0 
+Semaphore Up ->  1
+Semaphore Down ->  5
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  4
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Up ->  8
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+  .    .   2   .    .   .   .   -1   0  -1    2   1   0 
+  .    .   .   .    .   .   1   -1   0  -1    2   1   0 
+  .    .   .   .    .   1   .   -1   0  -1    2   1   0 
+Semaphore Up ->  1
+Semaphore Up ->  8
+Semaphore Down ->  1
+  .    .   0   .    .   .   .   -1   0  -1    2   1   0 
+  .    .   .   .    .   .   2   -1   0  -1    2   1   1 
+  1    .   .   .    .   .   .   -1   0  -1    2   1   1 
+  2    .   .   .    .   .   .   -1   1   0    2   1   1 
+Semaphore Up ->  1
+Semaphore Down ->  4
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+  .    .   1   .    .   .   .   -1   1   0    2   1   1 
+Semaphore Up ->  1
+Semaphore Down ->  5
+Semaphore Down ->  1
+Semaphore Up ->  1
+Semaphore Down ->  1
+  .    .   .   1    .   .   .   -1   1   0    2   1   1 
+  .    .   .   .    .   2   .   -1   1   0    2   2   1 
+  3    .   .   .    .   .   .   -1   1   0    2   2   1 
+Semaphore Up ->  1
+Semaphore Down ->  1
+  .    .   0   .    .   .   .   -1   1   0    2   2   1 
+Semaphore Up ->  1
+Semaphore Down ->  1
+  .    .   .   0    .   .   .   -1   1   0    2   2   1 
+  .    .   .   .    .   .   0   -1   1   0    2   2   1 
+Semaphore Up ->  1
+Semaphore Down ->  4
+Semaphore Down ->  1
+  .    .   3   .    .   .   .   -1   1   0    2   2   1 
+Semaphore Up ->  7
+Semaphore Up ->  1
+  .    .   .   .    .   0   .   -1   1   0    2   2   1 
+Semaphore Up ->  1
+Semaphore Down ->  3
+Semaphore Down ->  1
+  .    3   .   .    .   .   .   -1   1   0    2   2   1 
+Semaphore Up ->  6
+Semaphore Up ->  1
+  .    .   .   .    .   3   .   -1   1   0    2   2   1 
+  .    .   .   .    .   .   3   -1   1   0    2   2   1 
+Semaphore Up ->  1
+Semaphore Down ->  5
+Semaphore Down ->  1
+  .    .   .   3    .   .   .   -1   1   0    2   2   1 
+Semaphore Up ->  8
+Semaphore Up ->  1
+  .    .   .   .    3   .   .   -1   1   0    2   2   1 
+Semaphore Up ->  1

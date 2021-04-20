@@ -1,0 +1,80 @@
+O valor de retorno de uma funcao é um inteiro apenas com um byte sem sinal [0:255]
+
+Os parâmetros das funções não são passados dentro de parêntesis
+    func1 /etc -> /etc = $1
+
+
+func1 $2
+    if [[ $? -ne 0 ]] -> $? valor de retorno da func1
+
+
+Podemos organizar as nossas funções em ficheiros .sh (bibliotecas), e utilizá-las em outros scripts fazendo:
+
+#!/bin/bash
+.   lib1.sh
+
+
+func1 /
+
+
+$expr $v + 1    >   /dev/null                    2>&1 
+                    redirecionamento do stdout  | redirecionamento do stderr para o stdout
+
+se $v for uma variavel inteira ($v = 45), o resultado é a soma $v + 1 = 46 ; Exit code: 0
+se $v for = abc, $v + 1 dá um erro not numerico                            ; Exit code: 1
+
+
+
+Arrays
+
+$arr[0] = 45
+$echo ${arr[0]}
+45
+$arr[1] = abc
+$echo ${arr[1]}
+abc
+$echo ${arr[@]} -> lista todos os elementos
+45 abc
+$echo ${#arr[@]} -> nº de elementos
+2
+$echo {!arr[@]} -> listar índices do Arrays
+0 1 
+
+
+Exemplo
+$b[1] = 100
+$b[8] = sop
+$echo ${#b[@]}
+2
+$echo ${!b[@]}
+1 8
+$declare -A c -> array associativo (mesmo que mapa em java e dicionario em python)
+$c[sop] = 20
+$c[iac] = 21
+$echo ${c[sop]}
+20
+$echo ${!c[@]}
+sop iac
+
+$d = (23 44 78)
+$echo ${d[1]}
+44
+
+# ciclo for (1)
+
+$for i in $(seq 0 $(( ${#d[@]}-1 ))) 
+do 
+    echo ${d[$i]} # d[$i] ou d[i]
+done
+23
+44
+78
+
+# ciclo for (2)
+$for (( i=0; i<${#d[@]}; i++))
+do  echo ${d[i]} ; done
+
+# ciclo for (3)
+$for j in ${!d[@]} -> lista dos indices
+
+$ arr1 = ( $(cat "$1") )

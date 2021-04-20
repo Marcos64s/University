@@ -1,0 +1,46 @@
+AULA 11
+
+->FILAS DE MENSAGENS
+
+int msgget(key.t key, int msgblg);     ---------------->retorna msgid
+int msgctl(int msgid, int cmd, struct ...);
+int msgsend(int msgid, void *msgp, size.t msgsz, int msgflg);
+size.t msgrcv(int msgid, void *msgp, size.t msgsz, int msgtyp, int msgflg);
+
+struct msgbuf{
+    long mtype;  // tem de ser maior que 0 e é obrigatório
+    char mtext[1];  //pode ter diferentes tamanhos desde que sejam maiores ou iguais a zero (é opcional ser um array de chars. pode ser outra struct)
+}
+
+msgsend
+    void *msgp --> ponteiro para mensagem
+    size.t msgsz --> tamanho do mtext
+
+msgrcv
+    void *msgp --> ponteiro para buffer onde colocar a mensagem
+    size.t msgsz --> tamanho maximo mtext
+    int msgtyp  --> 0 - le a primeira mensagem
+                --> > 0 - le a primeira mensagem cujo mtype = msgtyp
+                --> < 0 - le a primeira mensagem com menor mtype e mtype <= |msgtyp|
+
+
+mtype ----> M1  --> M2  --> M3  --> M4
+            4       2       5       4
+
+msgrcv[msgtyp=0]
+    M1, M2, M3, M4, BLOCK
+
+msgrcv[msgtyp=4]
+    M1, M4, BLOCK
+
+msgrcv[msgtyp=-4]
+    M2, M1, M4, BLOCK
+
+int msg_create(int key);
+int msg_connect(int key);
+int msg_destroy(int msgid);
+int msg_send_nb(msgid, void * msg, int size);
+int msg_receive_nb(int msgid, void *msg, int size, long rd, ..);
+int msg_receive(int msgid, void *msg, int size, long rec);
+
+

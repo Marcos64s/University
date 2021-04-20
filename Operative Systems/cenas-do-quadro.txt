@@ -1,0 +1,17 @@
+whitespace - separador		
+$ - vários tipos expressões
+'texto' - texto literal, não é interpretado pelo basj
+"texto" - preserva os espaçoes mas interpreta expansões variaveis
+# - inicio de comentário
+; - separador de comandos
+\ - escape; próximo carater não é interpretado
+> - redireciona o output 
+< - redireciona o input
+| - pipe
+[[ expressão ]] - testar expressões condicionais
+{ comandos; } - interpretar vários comandos como se fosse apenas 1 comando
+`comando` - executa o comando; substitui $(...) pelo output do comando
+(comando) - subshell; comando é executado numa shell diferente
+((expressão)) - expressões aritméticas
+$((expressão)) - aritmética expressões; susbtituir $(...) pelo resultado da expressão aritmética
+& - coloca comando em backgroud

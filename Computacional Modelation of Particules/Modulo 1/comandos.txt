@@ -1,0 +1,24 @@
+
+Pre processamento e correr a simulaçao
+gmx grompp -f nvt.mdp -c etanol_gas_nvt_centrado.gro -p etanol.top -o etanol_gas_nvt.tpr
+gmx mdrun -deffnm etanol_gas_nvt -v
+
+Ver a simulaçao e m video
+gmx view -f etanol_gas_nvt -s etanol_gas_nvt
+
+
+Meter mais moleculas na caixa 
+gmx insert-molecules -f empty_box.gro -ci etanol_gas_em.gro -o 150etanol.gro -nmol 200 -try 1000
+
+
+Calcular densiade
+gmx density -f 150etanol_nvt -s 150etanol_nvt -o density_X.xvg -d X
+xmgrace density_X.xvg density_Y.xvg density_Z.xvg
+
+
+Calcular valores fisicos: densiade, temperatura, energia potencial
+gmx energy -f 150etanol_npt1 -s 150etanol_npt1 -o densidade_npt_1.xvg
+
+
+Adicionar solvente (agua)
+gmx solvate -cp 150etanol_nvt.gro -cs spc216.gro -o 150etanol_agua.gro

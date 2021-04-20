@@ -1,0 +1,245 @@
+#!/bin/bash
+
+function session_number(){
+	n_s=($(last | grep -c $1))
+	return $n_s
+}
+
+function max(){
+	max=0
+	for y in ${time[@]}; do
+		y=${y//[()]/}
+		y=${y//:/}
+		get_time "${y[@]}"
+		hm=$?
+		if (($hm > $max)); then 
+			max=$hm
+		fi 
+	done
+	return $max
+}
+
+function min(){
+	min=1000000
+	re='^[0-9]+$'
+	for x in ${time[@]}; do
+		x=${x//[()]/}
+		x=${x//:/}
+		get_time "${x[@]}"
+		hm=$?
+		if (( $hm < $min )); then
+			min=$hm
+		fi 
+	done
+	return $min
+}
+
+function get_time(){
+	mintot=0
+	get_time=("$@")
+	get_time=$(echo "${get_time[@]}" | cut -f1 -d"+")
+	c=60
+	hora=("${get_time:0:2}")
+	minutos=("${get_time:2}")
+	mintot=$(( $(($hora*$c)) + 10#$minutos ))
+	return $mintot
+}
+
+function session_time(){
+	sum=0
+	delete=(in running)
+	time=$(last | grep -i "$i" | awk '{print $10}')	
+	for del in ${delete[@]};do
+		time=("${time[@]/$del}")
+	done
+	for j in ${time[@]};do
+		j=${j//[()]/}
+		j=${j//:/}
+		get_time "${j[@]}"
+		hm=$?
+		sum=$(($sum + 10#$hm))
+	done
+	return $sum
+}
+
+function session_names(){
+	if [ -z "$lista" ];then
+		lista=$(last | awk '!x[$1]++' | awk '{print $1}')
+	fi
+	for i in ${lista[@]}; do 
+		if ! [[ $i == "wtmp" || $i == "reboot" ]]; then
+			names_fon=( "${names_fon[@]}" "$i" )
+		fi
+	done
+	return 0
+}
+
+
+function ord(){
+	counter=1
+	for remove in ${org[@]}; do
+		if [[ " ${op[@]} " =~ " ${remove} " ]]; then
+			op=( "${op[@]/$remove}" )
+			op=( "${op[@]}" "$remove" )
+			counter=$((counter+1))
+		fi
+	done
+	return 0
+}
+
+function data(){
+	for i in ${names[@]};do
+		session_number "$i"
+		number=$?
+		session_time "$i"
+		sum_time=$?
+		max "$i"
+		max=$?
+		min "$i"
+		min=$?
+		echo "$i $number $sum_time $max $min" >> compr.txt
+	done
+	unset names
+	names=$(cat compr.txt | sort -k"$1" -n"$2" | awk '{ print $1 }')
+	rm compr.txt
+	return 0
+}
+
+function print_info(){
+	arr=("$@")
+	for i in ${arr[@]};do
+		session_number "$i"
+		number=$?
+		session_time "$i"
+		sum_time=$?
+		max "$i"
+		max=$?
+		min "$i"
+		min=$?
+		echo "$i $number $sum_time $max $min" 
+	done
+}
+
+function main(){
+
+	ord
+
+	if [ ${#op[@]} -eq 0 ]; then # Funcional
+	session_names
+	print_info "${names_fon[@]}"
+
+	elif [ "${op[0]}" = "-f" ];then # Funcional
+		lista=$(last -f ${op[1]} | awk '!x[$1]++' | awk '{print $1}')
+		session_names
+		print_info "${names_fon[@]}"
+
+	else
+		for option in ${op[@]};do
+			if [ "$option" = "-u" ]; then # Funcional
+				string=${op[option+$counter]}
+			session_names
+
+			search=$(echo "$string" | sed "s/[^[:alnum:]-]//g")
+
+			unset names
+
+			for i in ${names_fon[@]};do
+				if [ "$(echo "$i" | grep "$search")" ]; then
+					names=( "${names[@]}" "$i" )
+				fi
+			done
+
+			elif [ "$option" = "-g" ]; then # Funcional
+				string=${op[option+1]}
+				members=$(cat /etc/group | awk -F: '{print $1, $3, $4}' | grep "$string" | while read group gid members; do
+					members=$members,$(awk -F: "\$4 == $gid {print \",\" \$1}" /etc/passwd);
+					echo "$members" | sed 's/,,*/ /g';
+				done)
+
+				unset names
+
+				for i in ${members[@]};do
+					session_number "$i"
+					number=$?
+					if ! [ "$number" = "0" ]; then
+						names=("${names[@]}" "$i")
+					fi
+				done
+
+
+			elif [[ "$option" = "-t" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=3
+				data "$subs" "r"
+			elif [[ "$option" = "-i" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=5
+				data "$subs" "r"
+			elif [[ "$option" = "-r" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				data "$subs"
+			elif [[ "$option" = "-a" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=4
+				data "$subs" "r"
+			elif [[ "$option" = "-n" ]]; then # Funcional
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=2
+				data "$subs" "r"
+			elif [[ "$option" = "-s" ]]; then # Caso preciso  && [[ "${op[option+5]}" = "-e" ]]
+				echo "Inicio/Fim"
+				a=1
+				b=5
+				for date in ${op[@]};do
+					datai="$datai ${op[option+a]}"
+					dataf="$dataf ${op[option+b]}"
+					a=$a+1
+					b=$b+1
+					if [[ $a -eq 4 ]];then
+						break
+					fi
+				done
+
+				datai=$(echo "$datai" | tr -d '"')
+				dataf=$(echo "$dataf" | tr -d '"')
+
+				date1=`date +%s --date="$datai"`
+				date2=`date +%s --date="$dataf"`
+
+				pcanddate=$(last -F | awk '{print $1,$5,$6,$7":d"}')
+
+				for k in ${pcanddate[@]};do
+					echo "$k"
+					check=$(echo "${pcanddate}" | awk '{print $4}')
+					'''if [[ "$check[k]" -lt "$date1" ]] || [[ "date2" -gt "$check" ]]; then
+						echo " In Range"
+					else
+						echo " Not"
+					fi'''
+
+				done				
+			fi		
+		done 
+		print_info "${names[@]}"
+	fi
+
+	return 0
+}
+op=("$@")
+org=("-t" "-a" "-n" "-i" "-r" )
+main

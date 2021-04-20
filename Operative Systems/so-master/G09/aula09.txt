@@ -1,0 +1,121 @@
+Aula 09
+
+-Threads
+* Mutex
+* Variáveis de condição
+
+O espaço de enderaçamento de todas as Threads são o mesmo.
+O mesmo endereço para duas Threads diferentes tem sempre o mesmo valor.
+As Threads não partilham variáveis locais porque cada Threads tem a sua stack.
+
+Vantagens de utilziar Threads relativamente a processos:
+-Comutação - é mais rápido mudar de uma thread para outra do que um processo para outro
+
+As Threads também partilham lista de ficheiros abertos, sinais
+
+Bibliotexa Pthreads
+Sempre que quisermos criar uma thread, deve-se usar a 
+função int pthread_create(pthread_t *tid, pthread_attr_t *at, void *(*start_routine)(void *), void(*arg));
+
+pthread_t *tid -> parâmetro de saída - identificador da thread
+pthread_attr_t *at -> Atributos
+void *(*start_runtime)(void *) -> ponteiro para a função que a thread vai executar
+
+pthread_create -> criar e iniciar a execução da thread
+
+O código que vai ser executado pela thread é aquele que estará na start routine
+A função que vai ser executada pela thread tem de ter obrigatoriamente um apontador genérico e retornar um valor genérico
+
+void *arg -> argumento passado à start_routine
+
+o valor de retorno é 0 se sucesso
+
+
+int pthread_join(pthread_t tid, void **pretval);
+void pthread_exit(void *retval);
+
+o join serve para esperar que uma thread termine.
+o exit serve para terminar a thread corrente
+
+se uma thread se deixar ir até ao final da start_routine, ela termina   
+
+Mesmo que programas que não criem threads, têm threads, pelo menos 1, a principal
+Imagine-se que temos 1 processo mãe que lança 4 threads -> quando o main termina, é invocada automaticamente
+a função exit -> esta por sua vez, termina o processo. Como as threads estão dentro do processo, também morrem.
+
+Para evitar isso, as threads não podem morrer, logo utiliza-se a funçao pthrea_exit.
+
+O void * presente no argumento das funções é o mesmo, no entanto o pretval é um endereço de um void *, e a função join escreve nesse endereço um apontador para void *
+
+
+Makefiles:
+
+target: dependências
+<TAB>   comando1    --| geram target a partir das dependências
+<TAB>   comando2    --|
+
+UM ponto .o é resultado da compilação do .c, mas ainda não está linkado
+
+
+
+Exercício 1 - 
+Quando várias threads fazem um incremento ao mesmo tempo, o valor final pode nao ser o que era suposto
+
+d) 
+    i) Região partilhada -> A região partilhada é a variável value
+    ii) 
+        Região crítica - uma thread ou um processo a executar de cada vez
+
+        vSet
+            value = new_value -> está na região crítica
+        vGet
+            return value -> está na região crítica
+        vInc
+            int val            _
+            val = value         | 
+            delay               | -> região crítica
+            value = val + 1;   _|
+            delay         
+
+2 threads - 1000 incrementos
+Valor máximo value = 2000
+Valor mínimo value = 2
+
+
+MUTEX - Semáforos binários
+- são inicializados a 1
+- lock() -> down
+- unlock() -> up
+É usado tipicamente para proteger exclusão mútua
+
+
+Proteger a região crítica 
+Inicializar semaforo a 1, fazer down() antes da regiao critica e fazer up() depois da regiao critica
+
+
+Exercício 3
+
+____________________________
+| Monitor                   
+|                           
+| dados       
+    mutex m;
+    condicao c1;
+| func1 {
+|   m.lock();
+        c1.wait();
+    m.unlock();
+| }
+| func2 {
+|   m.lock();
+        c1.wait();
+    m.unlock();
+|}
+|
+|
+____________________________
+
+VARIÁVEIS DE CONDIÇÃO
+
+-> wait - bloqueia até que exista um signal na mesma variável de condicao e libertam de forma temporario o lock associado
+-> signal -> o signal serve para desbloquear uma thread em wait(). Não tem efeitos se não há wait()s.

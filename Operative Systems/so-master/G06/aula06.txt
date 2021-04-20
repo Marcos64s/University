@@ -1,0 +1,84 @@
+FILE *fopen(char *path, char *mode);
+|-> NULL em caso de erro
+|-> *path - caminho relativo em absoluto
+|-> "r" - read, "w" - write, "a" - append
+|-> "rb", "wb", "ab" -> ficheiros binários (em Linux, não faz diferença nenhuma)
+|-> "r+", "w+", "a+" -> read + write
+
+FILE *fp1;
+fp1 = fopen("fich1.txt", "r");
+if(fp1 == NULL) {ERRO}
+
+char *fgets(char *s, int size, FILE *stream); - ler linhas de ficheiros de texto
+*s - apontador para buffer de leitura
+size - tamanho do buffer (bytes)
+
+fgets até que: (ler linhas completas)
+-fim do ficheiros
+-ler char '\n' -> logo a seguir de ler o '\n', retorna
+- ler size - 1 chars
+
+
+Exercício 1
+errno = 0 - error number
+
+fp = fopen(...)
+|- NULL se erro
+Para ter mais informações sobre o erro que ocorreu, a variável errno fornece-nos
+
+int strlen(char *s);
+
+
+Exercício 2
+void qsort(void *base, size_t nmemb, size_t size, int (*compare)(void *, void *));
+|-> Esta função permite ordenar arrays (de qualquer tipo)
+
+void *base - ponteiro para início do arrays
+size_t nmemb - nº de elementos to arrays
+size_t size - tamanho(bytes) de cada elemento
+*compare - ponteiro para uma função com 2 parâmetros (ambos do tipo void*) e retorna um inteiro
+    inteiro que pode ser 0, >0 ou <0
+
+int compareInto(void *px1, voind *px2)
+{
+    int x1;
+    x1 = *((int *)px1); - px1 (void*) ; (int *)(px1) (int *) ; *((int *)px1) (int)
+
+}
+
+
+char line[80];
+int val;
+fgets(line,80,fp1); 
+v = atoi(line);
+
+
+int val;
+fp = fope(...);
+fscanf(fp, "%d", &val);
+|-> retorna o nº de conversões (1 no sucesso)
+
+
+fscanf(fp, "%[^\n]",line);
+lê até '\n'
+fscanf(fp, "%*c"); - lê e descarta 1 char (começar '\n')
+fscanf(fp, "%[\n]", line2);
+
+int system(char *command)
+
+
+
+
+Exercício 3
+
+Temos de saber o tempo atual
+time_t time(time_t &t_loc);
+char *ctime(time_t *t_loc);
+struct tm;
+
+time_t sec;
+sec = time(NULL);
+printf("%s", c_time(&sec));
+
+system("ls -l");
+system("cp f1 f1");

@@ -1,0 +1,8 @@
+Date: 2018-11-18 22:8:38 | Command: echo ola
+Date: 2018-11-18 22:8:38 | Command: ls -l
+Date: 2018-11-18 22:8:38 | Command: ls -lR
+Date: 2018-11-18 22:8:38 | Command: echo adeus
+Date: 2018-11-18 22:8:57 | Command: echo ola outra vez
+Date: 2018-11-18 22:8:57 | Command: cd Desktop
+Date: 2018-11-18 22:8:57 | Command: date
+Date: 2018-11-18 22:8:57 | Command: echo adeus outra vez

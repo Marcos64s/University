@@ -1,0 +1,292 @@
+#!/bin/bash
+
+function max(){
+	max=0
+	time=$(last | grep -i "$i" | awk '{print $10}' | sed 's/[^0-9]*//g')
+	for y in ${time[@]}; do
+		y=${y//[()]/}
+		y=${y//:/}		
+		hm=$(get_time "${y[@]}")
+		if (($hm > $max)); then 
+			max=$hm
+		fi 
+	done
+	echo $max
+}
+
+
+
+
+
+
+
+function min(){
+	min=1000000
+	time=$(last | grep -i "$i" | awk '{print $10}' | sed 's/[^0-9]*//g')
+	for x in ${time[@]}; do
+		x=${x//[()]/}
+		x=${x//:/}
+		hm=$(get_time "${x[@]}")
+		if (( $hm < $min )); then
+			min=$hm
+		fi 
+	done
+	echo $min
+}
+
+function session_time(){
+	sum=0
+	delete=(in running)
+	time=$(last | grep -i "$i" | awk '{print $10}' | sed 's/[^0-9]*//g')
+	for del in ${delete[@]};do
+		time1=("${time[@]/$del}")
+	done
+	for j in ${time1[@]};do
+		j=${j//[()]/}
+		j=${j//:/}
+		minu=$(get_time "${j[@]}")
+		sum=$(($sum + 10#$minu))
+	done
+	echo $sum
+	return $sum
+}
+
+
+function get_time(){
+	mintot=0
+	get_time=("$@")
+	c=60
+	dias=$(echo "${get_time[@]}" | cut -f1 -d"+")
+	dias=${dias//+/}
+	if [ $dias = ${get_time[@]} ];then 
+		dias=0
+	fi
+	hora=${get_time//$dias/}
+	hora=("$(echo $get_time | cut -f2 -d"+")")
+	hora=("${hora:0:2}")
+	minutos=("${get_time: -2}")
+	minutos=${minutos//:/}
+	mintot=$(( 10#$dias*60*24 + 10#$hora*60 + 10#$minutos ))
+	echo $mintot
+	return $mintot
+}
+
+
+function session_number(){
+	n_s=$(last | grep -c $1)
+	return $n_s
+}
+
+
+
+function get_in_date(){
+	while read p; do
+		unset month
+		unset day
+		unset time
+		lista=$(echo "$p" | awk '{print $1}')
+		month=$(echo "$p" | awk '{print $2}')
+		get_month $month
+		month=$?
+		if [ $month -ge $1 ] && [ $month -le $4 ];then
+			day=$(echo "$p" | awk '{print $3}')
+			if [ $day -ge $2 ] && [ $day -le $5 ];then
+				time2=$(echo "$p" | awk '{print $4}')
+				get_time "$time"
+				time2=$?
+				if [ $3 -ge $time ] && [ $time -le $6 ];then
+					echo "$p" >> dados1.txt
+				fi
+			fi
+		fi
+	done < dados.txt
+	rm dados.txt
+
+}
+
+function session_names(){
+	if [ -z "$lista" ];then
+		lista=$(last | awk '!x[$1]++' | awk '{print $1}')
+	fi
+	for i in ${lista[@]}; do 
+		if ! [[ $i == "wtmp" || $i == "reboot" ]]; then
+			names_fon=( "${names_fon[@]}" "$i" )
+		fi
+	done
+	return 0
+}
+
+
+function ord(){
+	counter=1
+	for remove in ${org[@]}; do
+		if [[ " ${op[@]} " =~ " ${remove} " ]]; then
+			op=( "${op[@]/$remove}" )
+			op=( "${op[@]}" "$remove" )
+			counter=$((counter+1))
+		fi
+	done
+	return 0
+}
+
+function data(){
+	for i in ${names[@]};do
+		session_number "$i"
+		number=$?
+		sum_time=$(session_time "$i")
+		max=$(max "$i")
+		min=$(min "$i")
+		echo "$i $number $sum_time $max $min" >> compr.txt
+	done
+	unset names
+	names=$(cat compr.txt | sort -k"$1" -n"$2" | awk '{ print $1 }')
+	rm compr.txt
+	return 0
+}
+
+function print_info(){
+	arr=("$@")
+	for i in ${arr[@]};do
+		session_number "$i"
+		number=$?
+		sum_time=$(session_time "$i")
+		max=$(max "$i")
+		min=$(min "$i")
+		echo "$i $number $sum_time $max $min"
+	done
+}
+
+function get_month(){
+	unset M
+	for X in Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+	do
+		[ "$1" = "$X" ] && break
+		M=`expr $M + 1`
+	done
+
+	return $(($M + 1)) 
+}
+
+function main(){
+
+	ord
+
+	if [ ${#op[@]} -eq 0 ]; then # Funcional
+		session_names
+	print_info "${names_fon[@]}"
+
+	elif [ "${op[0]}" = "-f" ];then # Funcional
+		lista=$(last -f ${op[1]} | awk '!x[$1]++' | awk '{print $1}')
+		session_names
+		print_info "${names_fon[@]}"
+
+	else
+		for option in ${op[@]};do
+			if [ "$option" = "-u" ]; then # Funcional
+				string=${op[option+$counter]}
+			session_names
+
+			search=$(echo "$string" | sed "s/[^[:alnum:]-]//g")
+
+			unset names
+
+			for i in ${names_fon[@]};do
+				if [ "$(echo "$i" | grep "$search")" ]; then
+					names=( "${names[@]}" "$i" )
+				fi
+			done
+
+			elif [ "$option" = "-g" ]; then # Funcional
+				string=${op[option+1]}
+				members=$(cat /etc/group | awk -F: '{print $1, $3, $4}' | grep "$string" | while read group gid members; do
+					members=$members,$(awk -F: "\$4 == $gid {print \",\" \$1}" /etc/passwd);
+					echo "$members" | sed 's/,,*/ /g';
+				done)
+
+				unset names
+
+				for i in ${members[@]};do
+					session_number "$i"
+					number=$?
+					if ! [ "$number" = "0" ]; then
+						names=("${names[@]}" "$i")
+					fi
+				done
+
+
+			elif [[ "$option" = "-t" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=3
+				data "$subs" 
+			elif [[ "$option" = "-i" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=5
+				data "$subs"
+			elif [[ "$option" = "-r" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				data "$subs" "r"
+			elif [[ "$option" = "-a" ]]; then
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=4
+				data "$subs"
+			elif [[ "$option" = "-n" ]]; then # Funcional
+				if [ -z "$names" ];then
+					session_names
+					names=${names_fon[@]} 
+				fi
+				subs=2
+				data "$subs"
+			elif [[ "$option" = "-s" ]]; then # Caso preciso  && [[ "${op[option+5]}" = "-e" ]]
+
+				datai="$datai ${op[option+1]}"
+				dataf="$dataf ${op[option+3]}"
+
+				datai=${datai//[""]/}
+				dataf=${dataf//[""]/}
+
+				mi=$(echo $datai | awk '{print $1}')
+				di=$(echo $datai | awk '{print $2}')
+				hi=$(echo $datai | awk '{print $3}')
+				mf=$(echo $dataf | awk '{print $1}')
+				df=$(echo $dataf | awk '{print $2}')
+				hf=$(echo $dataf | awk '{print $3}')
+
+				last | awk '{print $1,$5,$6,$7}' > dados.txt
+
+				get_month "$mi"
+				mi=$?
+				get_time "$hi"
+				hi=$?
+
+				get_month "$mf"
+				mf=$?
+				get_time "$hf"
+				hf=$?
+
+				get_in_date "$mi" "$di" "$hi" "$mf" "$df" "$hf" 
+
+
+				cat dados1.txt 
+				rm dados1.txt
+			fi
+		done
+		print_info "${names[@]}" 
+	fi
+
+	return 0
+}
+op=("$@")
+org=("-t" "-a" "-n" "-i" "-r" )
+main

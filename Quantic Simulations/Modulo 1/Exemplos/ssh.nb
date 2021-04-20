@@ -1,0 +1,268 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      9824,        258]
+NotebookOptionsPosition[      8938,        234]
+NotebookOutlinePosition[      9380,        250]
+CellTagsIndexPosition[      9337,        247]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Wannier SSH", "Section",
+ CellChangeTimes->{{3.752841235116023*^9, 3.752841240395412*^9}, {
+  3.7991289298380513`*^9, 
+  3.7991289307265544`*^9}},ExpressionUUID->"234986da-74f5-4fb2-bea0-\
+af93b9052434"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"tophalf", "=", 
+    RowBox[{"SparseArray", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
+          RowBox[{
+           RowBox[{"OddQ", "[", "i", "]"}], "&&", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"i", "-", "j"}], ")"}], "\[Equal]", 
+            RowBox[{"-", "1"}]}]}]}], "\[Rule]", "tt1"}], ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
+          RowBox[{
+           RowBox[{"EvenQ", "[", "i", "]"}], "&&", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"i", "-", "j"}], ")"}], "\[Equal]", 
+            RowBox[{"-", "1"}]}]}]}], "\[Rule]", "tt2"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"12", ",", "12"}], "}"}]}], "]"}]}], ")"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"hamiltonian", "=", 
+    RowBox[{
+     RowBox[{"tophalf", "+", 
+      RowBox[{"ConjugateTranspose", "[", "tophalf", "]"}]}], "//", 
+     "Normal"}]}], ")"}], "//", "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.7991290419935427`*^9, 3.799129050554433*^9}, {
+  3.7991291785688596`*^9, 3.799129195444463*^9}, {3.7991292274421177`*^9, 
+  3.799129249572811*^9}, {3.7991293000826464`*^9, 3.7991293146855087`*^9}, {
+  3.7991295543100405`*^9, 3.799129752727866*^9}},
+ CellLabel->"In[32]:=",ExpressionUUID->"91b19c3c-7374-407c-aca9-92eaeaf49a95"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", "tt1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
+     {
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0", "0", 
+      "0", "0", "0", "0", "0"},
+     {"0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0", "0", "0", 
+      "0", "0", "0", "0"},
+     {"0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0", "0", 
+      "0", "0", "0"},
+     {"0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0", "0", "0", 
+      "0", "0"},
+     {"0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0", "0", 
+      "0"},
+     {"0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.8139133449389734`*^9},
+ CellLabel->
+  "Out[33]//MatrixForm=",ExpressionUUID->"a41709ee-471f-437b-be58-\
+8774d79891dc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0", "tt1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
+     {
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0", "0", 
+      "0", "0", "0", "0", "0"},
+     {"0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0", "0", "0", 
+      "0", "0", "0", "0"},
+     {"0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0", "0", 
+      "0", "0", "0"},
+     {"0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0", "0", "0", 
+      "0", "0"},
+     {"0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0", "0", 
+      "0"},
+     {"0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1", "0", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0", "tt2", "0"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt2", "]"}], "0", "tt1"},
+     {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
+      RowBox[{"Conjugate", "[", "tt1", "]"}], "0"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Input",
+ CellChangeTimes->{3.813913341454285*^9},
+ CellLabel->"In[34]:=",ExpressionUUID->"5806181d-08ab-405c-b12e-3ab2a1504170"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "tt1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Conjugate", "[", "tt1", "]"}], ",", "0", ",", "tt2", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"Conjugate", "[", "tt2", "]"}], ",", "0", ",", "tt1", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt1", "]"}], ",", "0", ",", "tt2", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt2", "]"}], ",", "0", ",", "tt1", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt1", "]"}], ",", "0", ",", "tt2", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt2", "]"}], ",", "0", ",", "tt1", ",", "0", 
+     ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt1", "]"}], ",", "0", ",", "tt2", ",", "0", 
+     ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt2", "]"}], ",", "0", ",", "tt1", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", 
+     RowBox[{"Conjugate", "[", "tt1", "]"}], ",", "0", ",", "tt2", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt2", "]"}], ",", "0", ",", "tt1"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", 
+     RowBox[{"Conjugate", "[", "tt1", "]"}], ",", "0"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.813913341542051*^9, 3.8139133450347176`*^9}},
+ CellLabel->"Out[34]=",ExpressionUUID->"388dc056-0177-422b-8510-2aaed50fbc6a"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{807.5999999999999, 574.1999999999999},
+WindowMargins->{{3.5999999999999996`, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8cf1ce28-21cd-4197-b87d-47dc9528c5f8"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 209, 4, 67, "Section",ExpressionUUID->"234986da-74f5-4fb2-bea0-af93b9052434"],
+Cell[CellGroupData[{
+Cell[814, 30, 1550, 42, 116, "Input",ExpressionUUID->"91b19c3c-7374-407c-aca9-92eaeaf49a95"],
+Cell[2367, 74, 1911, 45, 243, "Output",ExpressionUUID->"a41709ee-471f-437b-be58-8774d79891dc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4315, 124, 1891, 43, 216, InheritFromParent,ExpressionUUID->"5806181d-08ab-405c-b12e-3ab2a1504170"],
+Cell[6209, 169, 2701, 61, 259, "Output",ExpressionUUID->"388dc056-0177-422b-8510-2aaed50fbc6a"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

@@ -1,0 +1,8 @@
+﻿π Fname, Minit, Lname, employee.Ssn
+	(employee ⨝ employee.Super_ssn = Supervisor.Ssn
+		(ρ Supervisor
+			(
+				π Ssn (σ (Fname='Carlos' ∧ Minit='D' ∧ Lname='Gomes') (employee))
+			)
+		)
+	)

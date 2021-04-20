@@ -1,0 +1,71 @@
+Exercício 2:
+
+    Estruturas de decisão:
+
+    if command-test             // é um comando que vai ser executado; não é uma expressão; teste verifica o exit status do comando
+    then                        //                                                          0 = sucesso, ~0 = fracasso                
+        commands-then
+    else
+        commands-else
+    fi
+
+
+    $./aula03e02.sh true
+    Verdadeiro
+    (NOTA)
+    $true
+    $echo $?
+    $0
+
+    $./aula03e02.sh false
+    Falso
+    (NOTA)
+    $false
+    $echo $?
+    $1
+
+    $./aula03e02.sh ls
+    aula03e01.sh  aula03e02a.sh  aula03.txt
+    Verdadeiro
+
+    $./aula03e02.sh 0
+    0: command not found
+    Falso
+
+    NOTA: Isto deu falso pois '0' não é um comando, logo o exit status é diferente de 0
+
+    $./aula03e02.sh 1
+    1: command not found
+    Falso
+
+    NOTA: Isto deu falso pois '1' não é um comando, logo o exit status é diferente de 0
+          A mesma coisa irá acontecer para o o 'xpto'
+
+
+
+    c) Devemos usar sempre os parêntesis retos duplos [[]]
+
+Exercício 3:
+
+    a) É a melhor abordagem, verificar primeiro os argumentos e correr o script depois
+
+Exercício 4:
+
+    a) 
+    
+    $df -h (df -> disk free; -h -> human readable)
+    Filesystem  Size    Used    Avail   Use%    Mounted on
+
+    $awk '{print $5'} - como o 'awk' é uma linguagem interpretada, vai ler o 5 elemento da tabela
+                        à entrada da pipe, que é o valor do "Use%"
+   
+    $grep % - o grep analisa linha a linha, mas só coloca na saída da pipe as linhas que têm uma percentagem '%'
+              (Ou seja, neste caso, é inútil para os campos de Use%, porque todos têm '%')
+
+    $grep -v Use - o grep não quer a linha que tenha 'Use', ignorando-abordagem
+
+    $sort -n - Vair ordenar de forma numérica(-n), por ordem decresnte
+
+    $tail -1 - Permite-nos extrair uma linha 
+
+    $cut -d "%" -f1 - Permite-nos extratir um carater, neste caso o '%', no campo 1

@@ -1,0 +1,108 @@
+Aula 10
+
+SYSTEM VIPC - InterProcess Communication
+
+-> memória partilhada
+-> arrays de semáforos
+
+A       C 
+up()    down()
+B       D
+
+Assim, A comunica com D 
+
+A memória partilhada será uma primitiva de comunicação
+Os semáforos são uma primitiva de sincronização 
+
+leitores e escritores
+2 semáforos: nobody e mutex -> vão para o array de semáforos
+1 variável: readers         -> vão para o array de memoria partilhada
+
+
+Características comuns da memória partilhada e do array de semáforos
+
+int shmget(key_t key, size_t key, size_t size, int shmflag);
+
+shmget - criar ou aceder a memória partilhada
+size - tamanho(bytes) da memória partilhada 
+shmflag - permissões (rwx (utilizador) rwx(grupo) rwx(outros)) | IPC_CREAT(criar um recursvo novo)
+        | IPC_EXCL(quisermos garantir que fomos nós que criámos a memória partilhada)
+
+se a memoria ja existe, IPC_CREAT e IPC_EXCL retornam -1
+
+valor de retorno: -1 se erro 
+                  shmid se sucesso
+
+
+key -> identificador único memória partilhada
+
+
+SYSTEM VIPC - InterProcess Communication
+
+(shm) -> memória partilhada
+(shm) -> arrays de semáforos
+
+
+key_t ftok(char *pathname, int projid);
+
+
+A chave é uma coisa muito presistente. A mesma chave pode ter vários shmid.
+A chave é o identificador externo. O shmid é um identificador interno.
+
+shmid se sucesso
+int shmctl (int shmid, int command, struct ... );
+
+sgmctl -> control 
+cmd -> para hoje IPC_RMID   
+
+
+Na prática
+
+Processo P1 com uma memória
+Memória partilhada -> guarda um inteiro
+Processo P2 com uma memória
+
+int *pm1 do P1
+int *pm2 do P2 
+Ambos os apontadores apontam para a memória partilhada
+
+Para sabermos o apontador, utiliza-se a função
+
+void *shmat (int shmid, void *shmaddr, int shmflag);
+
+shmat -> attach
+shmaddr -> NULL ou pedido de endereço
+    Se for NULL, o valor do apontador é irrelevante. Ou podemos pedir que a memória partilhada 
+    fique num determinado endereço
+
+void -> retorna um apontador para o início da memória partilhada
+
+
+Tal como existe um attach, existe um dettach 
+
+int shmdt(void* shmaddr);
+
+sharedMemory | .c ou .h 
+shmemCreate(int key, int size)
+shmemConnect(int key)
+shmemAttach(int shmid, void **pAttached)
+shmemDettach(void *dettach)
+shmemDestroy(int shmid)
+
+void **pAttached -> parâmetro da saida 
+
+int *pm1
+int shmid 
+shmid = shmemCreate(Ox1234, sizeof(int))
+shmemAttach(shmid, &pm1);
+*pm1 = 20
+
+
+semget - criar ou aceder um array de semaforos
+semctl - enviar comandos para o array de semafors 
+semop - operacao sobre um array de semaforos (fazer up() e down() que quisermos)
+
+
+
+EXERCÍCIO 1 -
+UMA REGIÃO CRÍTICA - 1 SEMÁFORO

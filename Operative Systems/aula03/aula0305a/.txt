@@ -1,0 +1,9 @@
+#!/bin/bash
+# For all the files in a folder, show their properties
+if ! [[ -n $2 ]]; then
+	for f in $1/*; do
+	 mv "$f" "$f_new.txt"
+	done
+else
+	echo "Too mutch arguments"
+fi
